@@ -106,15 +106,17 @@
             background-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-            padding: 8px 0;
-            height: 70px;
+            height: 70px; /* Fixed height */
+            display: flex;
+            align-items: center;
         }
         
         .header-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center content horizontally */
             align-items: center;
-            height: 100%;
+            height: 100%; /* Take full height of header */
+            width: 100%;
         }
         
         .logo {
@@ -122,26 +124,18 @@
             align-items: center;
             cursor: pointer;
             transition: transform 0.3s ease;
+            height: 100%; /* Take full height of header */
+            padding: 0; /* Remove extra padding */
         }
-        
+
         .logo:hover {
             transform: translateY(-2px);
         }
-        
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-        }
-        
-        .logo-icon i {
-            color: white;
-            font-size: 22px;
+
+        .logo-img {
+            height: 150px; /* Slightly reduced for better fit */
+            width: auto;
+            transition: transform 0.3s ease;
         }
         
         .logo-text h1 {
@@ -154,7 +148,6 @@
         .logo-text p {
             font-size: 0.8rem;
             color: var(--gray);
-            transform: translate(2px, -10px);
         }
         
         /* Scroll to Top Button */
@@ -195,7 +188,7 @@
             background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
                         url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
-            background-position: center;
+            background-position: center 50%;
             background-attachment: fixed;
             color: white;
             padding: 180px 0 120px;
@@ -302,6 +295,40 @@
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+        
+        .material-card:hover::before {
+            transform: scale(1.05);
+        }
+        
+        .material-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+            z-index: 2;
         }
         
         .material-card:hover {
@@ -309,23 +336,50 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
+        /* Material Card Specific Backgrounds */
+        .material-card.paper::before {
+            background-image: url('image/cardboard.jpg');
+        }
+        
+        .material-card.plastic::before {
+            background-image: url('image/plastic.jpg');
+        }
+        
+        .material-card.ferrous::before {
+            background-image: url('image/ferrous.jpg');
+        }
+        
+        .material-card.non-ferrous::before {
+            background-image: url('image/non-ferrous.jpg');
+        }
+        
+        .material-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+        }
+        
         .material-icon {
             font-size: 48px;
-            color: var(--primary);
+            color: var(--secondary);
             margin-bottom: 20px;
-            height: 80px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .material-card h3 {
             margin-bottom: 15px;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .material-card p {
-            color: var(--gray);
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         
         /* Clients Section */
@@ -452,6 +506,18 @@
             grid-template-columns: 1fr 2fr;
             gap: 60px;
             margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-logo-img {
+            height: 150px;
+            width: auto;
+            margin-bottom: 15px;
+            background:var(--light-gray);
         }
         
         .footer-logo h3 {
@@ -595,22 +661,32 @@
                 height: 45px;
                 font-size: 20px;
             }
+            
+            .material-card {
+                min-height: 300px;
+                padding: 25px;
+            }
+            
+            .logo-img {
+                height: 40px;
+            }
+            
+            .footer-logo-img {
+                height: 40px;
+            }
         }
         
         @media (max-width: 576px) {
             .header-container {
                 justify-content: center;
-                height: auto;
-                padding: 10px 0;
             }
             
             header {
-                height: auto;
-                padding: 0;
+                height: 70px;
             }
             
             .logo {
-                margin-bottom: 0;
+                justify-content: center;
             }
             
             .hero {
@@ -642,6 +718,20 @@
                 height: 40px;
                 font-size: 18px;
             }
+            
+            .logo-img {
+                height: 125px;
+                margin-right: 10px;
+		*/margin-top: 5px;*/
+            }
+            
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .footer-logo-img {
+                height: 150px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -668,6 +758,11 @@
             .experience-text {
                 font-size: 1.2rem;
             }
+            
+            .material-card {
+                min-height: 280px;
+                padding: 20px;
+            }
         }
         
         /* Touch-friendly elements for mobile */
@@ -691,13 +786,7 @@
     <header id="header">
         <div class="container header-container">
             <div class="logo" id="logoScrollTop">
-                <div class="logo-icon">
-                    <i class="fas fa-recycle"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>Deepika Traders</h1>
-                    <p>Scrap Trading & Recycling</p>
-                </div>
+                <img src="Deepika_Traders_Logo_with_Name.png" alt="Deepika Traders Logo" class="logo-img" scale=2>
             </div>
         </div>
     </header>
@@ -753,36 +842,44 @@
                 <div class="divider"></div>
             </div>
             <div class="materials-grid">
-                <div class="material-card">
-                    <div class="material-icon">
-                        <i class="fas fa-cubes"></i>
+                <div class="material-card paper">
+                    <div class="material-content">
+                        <div class="material-icon">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h3>Paper & Cardboard</h3>
+                        <p>Waste papers, corrugated boxes, cartons, and all paper-based materials</p>
                     </div>
-                    <h3>Paper & Cardboard</h3>
-                    <p>Waste papers, corrugated boxes, cartons, and all paper-based materials</p>
                 </div>
                 
-                <div class="material-card">
-                    <div class="material-icon">
-                        <i class="fas fa-industry"></i>
+                <div class="material-card plastic">
+                    <div class="material-content">
+                        <div class="material-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Plastic Scrap</h3>
+                        <p>All types of plastic scrap, granules, and plastic waste materials</p>
                     </div>
-                    <h3>Plastic Scrap</h3>
-                    <p>All types of plastic scrap, granules, and plastic waste materials</p>
                 </div>
                 
-                <div class="material-card">
-                    <div class="material-icon">
-                        <i class="fas fa-weight-hanging"></i>
+                <div class="material-card ferrous">
+                    <div class="material-content">
+                        <div class="material-icon">
+                            <i class="fas fa-weight-hanging"></i>
+                        </div>
+                        <h3>Ferrous Metals</h3>
+                        <p>Stainless steel, iron wastage, and other ferrous metals</p>
                     </div>
-                    <h3>Ferrous Metals</h3>
-                    <p>Stainless steel, iron wastage, and other ferrous metals</p>
                 </div>
                 
-                <div class="material-card">
-                    <div class="material-icon">
-                        <i class="fas fa-coins"></i>
+                <div class="material-card non-ferrous">
+                    <div class="material-content">
+                        <div class="material-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3>Non-Ferrous Metals</h3>
+                        <p>Aluminum, copper, brass, and other non-ferrous metals</p>
                     </div>
-                    <h3>Non-Ferrous Metals</h3>
-                    <p>Aluminum, copper, brass, and other non-ferrous metals</p>
                 </div>
             </div>
         </div>
@@ -909,6 +1006,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
+                    <img src="Deepika_Traders_Logo_with_Name.png" alt="Deepika Traders Logo" class="footer-logo-img">
                     <h3>Deepika Traders</h3>
                     <p>Professional scrap trading and recycling services with 30+ years of trusted experience in Vadodara, Gujarat.</p>
                 </div>
@@ -998,18 +1096,16 @@
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Header scroll effect
+        // Header scroll effect - REMOVE the padding change
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             const scrollTopBtn = document.getElementById('scrollTopBtn');
             
-            // Header effect
+            // Header effect - only shadow changes
             if (window.scrollY > 50) {
                 header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-                header.style.padding = '5px 0';
             } else {
                 header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
-                header.style.padding = '8px 0';
             }
             
             // Scroll to top button visibility
